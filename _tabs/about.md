@@ -5,4 +5,4 @@ order: 4
 text: hello
 ---
 
-I am a 3rd year electrical engineering student at the University of British Columbia who is highly interested in pursuing a career in embedded systems.
+I am a 2nd year electrical engineering student at Purdue University who is highly interested in pursuing a career in ASIC design.
