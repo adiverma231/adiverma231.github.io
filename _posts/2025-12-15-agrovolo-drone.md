@@ -29,8 +29,6 @@ through a USB-C port or serial wire debug pins.
 
 - I used an STM32F4 as the microcontroller for this project
 
-  
-
 ### Stepper Driver
 ![Stepper Schematic](/assets/images/stepper_driver){: .w-75 .shadow .rounded-10 }
 
