@@ -23,8 +23,8 @@ The drone is a VTOL (vertical takeoff and landing) quadrotor with a 3D-printed f
 ![Onboard Raspberry Pi Schematic](/assets/images/agrovolo/onboard_pi_schematic.png)
 
 
-[Flight Controller Board Render](https://github.com/adiverma231/adiverma231.github.io/blob/main/assets/literature/IMG_3321.MOV)
-*Ground controller being used to spin up props and control motor speed*
+Ground controller being used to spin up props and control motor speed: [video](https://github.com/adiverma231/adiverma231.github.io/blob/main/assets/literature/IMG_3321.MOV)
+
 ## Imaging Pipeline
 
 1. Both cameras capture raw images over the field during flight and write them to the Pi's microSD card
