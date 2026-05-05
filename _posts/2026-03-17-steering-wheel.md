@@ -1,0 +1,59 @@
+---
+title: Purdue Solar Racing Steering Wheel
+date: 2026-03-17 00:00:00 +0800
+tags: [Embedded, Firmware, C, CAN] 
+pin: true
+image:
+  path: /assets/images/x07/x07board3DVIEW.png
+  alt: Development board pcb
+  class: shadow
+---
+
+As part of Purdue's System on Chip Extension Technologies (SoCET) team, I designed a dedicated development board to validate the AFTx07 — SoCET's seventh custom RISC-V system-on-chip, fabricated on the SkyWater 130nm process. Prior testing relied on temporary breakout boards from Summer 2025 that suffered from unregulated power rails, mechanical fragility, and a complex external bench setup that made it difficult to isolate chip faults from test environment faults. The goal was a stable, repeatable platform that could validate every on-chip subsystem from first power-on.
+
+The board is built around the AFTx07, which contains a RV32IMC RISC-V core (3-stage pipeline, PMA + PMP), DMA controller, UART debugger, AHB interconnect, SPI and I2C peripherals, PLIC, CLINT, on-chip SRAM/ROM, and GPIO/Timer/PWM digital I/O. Since the SkyWater 130nm process requires separate power domains, the board implements dual independent AP2112K LDOs — 3.3V for I/O and 1.8V for the core — both fed from a 5V supply. Power rail indicator LEDs were implemented for both rails, with the 1.8V indicator using a BSS138 N-channel MOSFET as a voltage-controlled switch to handle the tight margin near the LED's forward voltage. Decoupling consists of 100nF capacitors per power pin and 4.7uF bulk capacitors distributed across the board.
+
+Clock generation required a standalone Abracon 25MHz crystal oscillator module, since the AFTx07 exposes only a single CLK pin with no on-chip pierce oscillator. The XO output voltage was validated against the pad input thresholds using the 70-30 rule (VIH = 2.31V, VIL = 0.99V), and startup timing was verified against the RC reset circuit time constant (τ = 10ms) to ensure the chip does not attempt to boot before a stable clock is present. The 3225 footprint was chosen to allow a drop-in swap between 3.3V and 1.8V output modules if pad voltage level is revised in the future.
+
+External memory is provided by two Renesas 71V416 SRAM banks in TSOP-44 packages, connected via a shared 18-bit address bus and 16-bit data bus with independent chip selects — totaling 1MB of addressable asynchronous memory. The 15ns SRAM access time provides a 25ns timing margin within the 40ns clock period. To accommodate their large pin count, both SRAMs are placed on the bottom layer of the 4-layer PCB, with memory traces length-matched to prevent read/write timing hazards. The full peripheral set includes a UART debug header and 32-channel GPIO breakout on the board edges.
+
+The schematic was captured in Altium Designer using hierarchical sheets for each subcircuit — power, clock, memory, and GPIO. A key challenge was reverse-engineering pin assignments and electrical characteristics in collaboration with the Design Flow and Verification sub-teams, since no formal datasheet exists for the AFTx07. The board is currently in the routing phase, with fabrication planned through AdvancedPCB. A successful bring-up will validate SoCET's design flow and serve as a reusable platform for future tapeout iterations.
+
+
+Check out the project report: [x07 Final Report](https://github.com/adiverma231/adiverma231.github.io/blob/main/assets/literature/x07_Final_Report.pdf)
+
+Check out the pcb repository: [PCB Design](https://github.com/Purdue-SoCET/)
+
+Check out our team website: [SoCET Website](https://engineering.purdue.edu/SoC-Team)
+
+### First iteration
+![Board in hand](assets/images/x07/prev_board.png){: .w-75 .mx-auto .d-block }
+
+# Some Design Considerations:
+- 4-layer stackup to improve signal integrity and make routing less of a nightmare around the AFTx07
+- Two separate LDOs for the 3.3V and 1.8V rails, since the chip has no internal regulator
+- XO footprint chosen to allow a quick component swap if the clock voltage level needs to change
+- Both SRAM chips placed on the bottom layer to save space and keep the messy routing in one area
+- Memory bus traces length-matched so all the parallel data bits arrive at the same time
+- Decoupling caps on every power pin to keep the power rails clean
+- Reset circuit timed to hold the chip in reset longer than it takes the clock to stabilize on startup
+- MOSFET used as a switch for the 1.8V power indicator LED, since 1.8V is too close to just drive an LED directly
+- Pin headers kept on the outer edges of the board to avoid routing over the center where things are already crowded
+
+# Full Schematic
+![full schematic](/assets/images/x07/full_schematic.png){: .w-75 .mx-auto .d-block }
+
+# External Oscillator
+![XO module](/assets/images/x07/oscillator_schematic.png){: .w-75 .mx-auto .d-block }
+
+# LDO Schematic
+![power](/assets/images/x07/LDO_schematic.png){: .w-75 .mx-auto .d-block }
+
+# SRAM
+![2 external ICs](/assets/images/x07/sram_schematic.png){: .w-75 .mx-auto .d-block }
+
+
+
+
+
+
