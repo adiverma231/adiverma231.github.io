@@ -11,7 +11,7 @@ image:
 
 The steering wheel is the driver's only interface to Artemis ('25-26 solar car iteration). I designed the PCB and wrote the firmware for the board, which handles all driver inputs and communicates state to the rest of the car over CAN.
 
-![PCB Render](/assets/images/steering-wheel/pcb_render.jpg)
+![PCB Render](/assets/images/artemis/SteerWheel_pcb_layout.png)
 
 ## Hardware
 
