@@ -5,4 +5,4 @@ order: 4
 text: hello
 ---
 
-I am a 2nd year electrical engineering undergraduate at Purdue University who is highly interested in pursuing a career in embedded systems.
+I am an Electrical Engineering Undergraduate (May 2028) at Purdue University with a strong interest in ASIC and digital design. My experience includes VLSI design, embedded systems, PCB design, and post-silicon validation.
